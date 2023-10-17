@@ -1,0 +1,44 @@
+div(class="mt-3 p-4 border shadow-sm bg-white d-flex flex-column w-100 h-100 rounded") 
+    p(class="letraChida h4") Add Patient
+    span(class="letraChida h6 text-secondary") Enter patient information for registration.
+    form(class="pt-5 w-100")
+        legend(class="letraChida h4") Personal information
+        .row
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")    
+                label(for="dni") Dni:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="dni" name="dni" type="text")
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="first_name") First Name:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="first_name" name="first_name" type="text")
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="last_name")  Last Name:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="last_name" name="last_name" type="text")
+        .row
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="phone") Phone:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="phone" name="phone" type="text")
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="email") Email:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="email" name="email" type="email")
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="password") Password:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="clave" name="clave" type="password")
+        .row
+            div(class="m-4 py-3 col d-flex flex-colum justify-content-start w-25 h6")
+                select(class="form-select p-2" id="gender" name="gender" aria-label="Default select example")
+                    option(selected) Gender:
+                    option(value="Male") Male
+                    option(value="Female") Female
+                    option(value="Other") Other
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="location") Location:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="location" name="location" type="text")
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="direction") Direction:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="direction" name="direction" type="text")
+        .row
+           div(class="mx-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="birthdate") Birthdate:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="birthdate" name="birthdate" type="date") 
+        div(class="mt-5 w-100 d-flex justify-content-center")
+            button(class="btn mt-5 text-white btnselected rounded w-25 letraChida shadow-sm" id="btnagregar" style="background-color:#9e00c5") Register

@@ -1,0 +1,47 @@
+div(class="mt-3 p-4 border shadow-sm bg-white d-flex flex-column w-100 h-100 rounded") 
+   p(class="letraChida h4") Update Patient
+   span(class="letraChida h6 text-secondary") Enter patient information for Update.
+   form(class="pt-5 w-100")
+       legend(class="letraChida h4") Personal information
+       .row
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="dni") Dni:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="dni" name="dni" type="text" value=users[0].dni)
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="first_name") First Name:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="first_name" name="first_name" type="text" value=users[0].first_name)
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="last_name")  Last Name:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="last_name" name="last_name" type="text" value=users[0].last_name)
+       .row
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="phone") Phone:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="phone" name="phone" type="text" value=users[0].phone)
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="email") Email:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="email" name="email" type="email" value=users[0].email)
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="password") Password:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="clave" name="clave" type="password" value=users[0].clave)
+       .row
+            div(class="m-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="location") Location:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="location" name="location" type="text" value=users[0].location)
+            div(class="m-4 py-3 col d-flex flex-colum justify-content-start w-25 h6")
+                select(class="form-select p-2" id="gender" name="gender" aria-label="Default select example")
+                 each option in ['Male', 'Female', 'Other']
+                        option(value=option, selected=(option === users[0].gender))= option
+            div(class="col m-4 w-25 form-check form-switch d-flex flex-row align-items-center justify-content-start")
+                - if (value=users[0].active)
+                  input(class="form-check-input h5 mx-2" type="checkbox"  name="active" id="active" checked)
+                - else
+                  input(class="form-check-input h5" type="checkbox"  name="active"  id="active")
+                label(class="form-check-label h6" for="btnActive") Active
+       .row 
+            div(class="mx-4 col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                label(for="birthdate") Birthdate:
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="birthdate" name="birthdate" type="date") 
+            div(class="col position-relative d-flex flex-colum justify-content-start w-25 h6")
+                input(class="position-absolute start-0 inputses2 h6 m-2 p-3" id="id" name="id" type="hidden" value=users[0].id)
+       div(class="mt-5 w-100 d-flex justify-content-center")
+            button(class="btn mt-5 text-white rounded w-25 letraChida shadow-sm" style="background-color:#9e00c5" id="btnupdate") Update
