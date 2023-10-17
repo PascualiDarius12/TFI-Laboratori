@@ -8,15 +8,15 @@ router.use(express.static("public"));
 router.use(bodyParser.urlencoded({ extended: true }));
 
 /* GET home page. */
+// router.get("/", function (req, res, next) {
+//   res.render("index", { title: "Laboratorio" });
+// });
+
+// router.get("/login", function (req, res, next) {
+//   res.render("login");
+// });
+
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Laboratorio" });
-});
-
-router.get("/login", function (req, res, next) {
-  res.render("login");
-});
-
-router.get("/main", function (req, res, next) {
   res.render("menu");
 });
 
