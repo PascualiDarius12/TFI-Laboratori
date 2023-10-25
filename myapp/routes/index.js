@@ -8,15 +8,15 @@ router.use(express.static("public"));
 router.use(bodyParser.urlencoded({ extended: true }));
 
 /* GET home page. */
-// router.get("/", function (req, res, next) {
-//   res.render("index", { title: "Laboratorio" });
-// });
-
-// router.get("/login", function (req, res, next) {
-//   res.render("login");
-// });
-
 router.get("/", function (req, res, next) {
+  res.render("index", { title: "Laboratorio" });
+});
+
+router.get("/login", function (req, res, next) {
+  res.render("login");
+});
+
+router.get("/main", function (req, res, next) {
   res.render("menu");
 });
 
@@ -62,11 +62,10 @@ router.get("/main/patient/:id", async (req, res) => {
       res.render("menus/mainsPatient/addPatient.pug");
       break;
     case "search":
-      try{
-
+      try {
         users = await User.findAll();
         res.render("menus/mainsPatient/searchPatient.pug", { users: users });
-      }catch{
+      } catch {
         console.error(error);
         res.status(500).send("ERROR in patient search.");
       }
@@ -90,7 +89,9 @@ router.post("/registerUser", async (req, res) => {
       clave: req.body.clave,
       location: req.body.location,
       birthdate: req.body.birthdate,
+      rol: "patient",
     });
+    console.log(newUser);
     res.render("messages/messPatient/messAddPatient.pug");
   } catch {
     console.error(error);
@@ -183,6 +184,31 @@ router.post("/main/patient/updateUser/newUser", async (req, res) => {
     // Manejar errores aquí
     console.error(error);
     res.status(500).send("ERROR in patient update.");
+  }
+});
+
+//EXAM ROUTES
+
+router.get("/main/exam/:id", async (req, res) => {
+  const id = req.params.id;
+  let users = [];
+  //lógica para determinar qué plantilla renderizar según el 'id'
+  switch (id) {
+    case "add":
+      res.render("menus/mainsExam/addExam.pug");
+      break;
+    case "search":
+      try {
+        users = await User.findAll();
+        res.render("menus/mainsPatient/searchExam.pug", { users: users });
+      } catch {
+        console.error(error);
+        res.status(500).send("ERROR in patient search.");
+      }
+      break;
+    default:
+      res.render("error.pug");
+      break;
   }
 });
 

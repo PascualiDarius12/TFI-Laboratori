@@ -2,48 +2,46 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Determinants', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
+      name: {
         type: Sequelize.STRING
       },
-      last_name: {
+      abbreviation: {
         type: Sequelize.STRING
       },
-      gender: {
+      detail: {
         type: Sequelize.STRING
+      },
+      measurement: {
+        type: Sequelize.STRING
+      },
+      value_max_male: {
+        type: Sequelize.INTEGER
+      },
+      value_min_male: {
+        type: Sequelize.INTEGER
+      },
+      value_max_female: {
+        type: Sequelize.INTEGER
+      },
+      value_min_female: {
+        type: Sequelize.INTEGER
       },
       active: {
         type: Sequelize.BOOLEAN
       },
-      dni: {
-        type: Sequelize.INTEGER
-      },
-      phone: {
-        type: Sequelize.INTEGER
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      adress: {
-        type: Sequelize.STRING
-      },
-      clave: {
-        type: Sequelize.STRING
-      },
-      location: {
-        type: Sequelize.STRING
-      },
-      birthdate: {
-        type: Sequelize.DATE
-      },
-      rol: {
-        type: Sequelize.STRING
+      examSubGroupId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Exam_sub_groups", 
+          key: "id", 
+        },
       },
       createdAt: {
         allowNull: false,
@@ -56,6 +54,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Determinants');
   }
 };

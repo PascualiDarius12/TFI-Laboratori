@@ -1,0 +1,33 @@
+div(class="position-relative p-5 w-100 bg-white shadow rounded ")
+    div(class="position-absolute top-0 end-0 m-2") 
+        i(class="fa-solid fa-circle-xmark text-danger")
+    legend(class="letraChida h4") New Determinant:
+    .row
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="nameDeterminant") Name:
+            input(class="py-2 inputses2 h6 m-2 " id="nameDeterminant" name="nameDeterminant" type="text")
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="abbreviationDeterminant") Abreviation:
+            input(class="py-2 inputses2 h6 m-2" id="abbreviationDeterminant" name="abbreviationDeterminant" type="text")
+    .row
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="measurementDeterminant") Measurement:
+            input(class="py-2 inputses2 h6 m-2 " id="measurementDeterminant" name="measurementDeterminant" type="text")
+    .row
+        span Male
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="minValueMan") Max-Value:
+            input(class="py-2 inputses2 h6 m-2 " id="maxValueMan" name="maxValueMan" type="text")
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="nameDeterminant") Min-Value:
+            input(class="py-2 inputses2 h6 m-2 " id="minValueMan" name="minValueMan" type="text")
+    .row
+        span Female
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="maxValueFemale") Max-Value:
+            input(class="py-2 inputses2 h6 m-2 " id="maxValueFemale" name="maxValueFemale" type="text")
+        div(class="position-relative my-4 d-flex flex-column justify-content-start w-50 h6")    
+            label(for="minValueFemale") Min-Value:
+            input(class="py-2 inputses2 h6 m-2 " id="minValueFemale" name="minValueFemale" type="text")
+    .w-100.d-flex.justify-content-center 
+        button.btn.btn-primary.text.white(id="btnRegisterDeterminant") Add Determinant

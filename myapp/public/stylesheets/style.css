@@ -119,6 +119,9 @@
   color: hsl(0, 0%, 55%);
 }
 
+.bg-color{
+  background-color: rgb(47, 112, 155);
+}
 .text-violet{
   color:#ffffff
 }

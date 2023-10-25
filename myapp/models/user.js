@@ -24,9 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     adress: DataTypes.STRING,
     clave: DataTypes.STRING,
     location: DataTypes.STRING,
-    birthdate: DataTypes.DATE
+    birthdate: DataTypes.DATE,
+    rol: DataTypes.STRING,
   }, {
     sequelize,
+    timestamps:true,
     modelName: 'User',
   });
   return User;
