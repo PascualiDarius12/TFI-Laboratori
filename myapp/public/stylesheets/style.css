@@ -24,7 +24,7 @@
   color: #ffffff;
 }
 
-.update{
+.update {
   color: #1f1d1d;
 }
 .sinPunto {
@@ -80,52 +80,52 @@
   font-size: 30px;
 }
 
-.update:hover{
+.update:hover {
   color: #14c417;
 }
 
-.logoGigante{
+.logoGigante {
   color: #30353927;
   font-size: 500px;
 }
 
-.logoGiganteOk{
+.logoGiganteOk {
   color: #225f1a27;
   font-size: 500px;
 }
 
-.logoGiganteNou{
+.logoGiganteNou {
   color: #ff000067;
   font-size: 500px;
 }
 
 .table-responsive {
-  max-height:400px;
+  max-height: 400px;
 }
 
-.selected:hover{
- background-color: #3035390d;
+.selected:hover {
+  background-color: #3035390d;
 }
 
-.bg-gris{
+.bg-gris {
   background-color: #e9e9e9;
 }
 
-.bg-oscuro{
+.bg-oscuro {
   background-color: #262a35;
 }
 
-.text-gris{
+.text-gris {
   color: hsl(0, 0%, 55%);
 }
 
-.bg-color{
-  background-color: rgb(47, 112, 155);
+.bg-color {
+  background-color: rgb(123, 0, 255);
 }
-.text-violet{
-  color:#ffffff
+.text-violet {
+  color: #ffffff;
 }
-.btnselected:hover{
+.btnselected:hover {
   background-color: #ffffff;
 }
 
@@ -135,6 +135,30 @@
   object-fit: cover;
 }
 
-input[type=checkbox]{ 
-  accent-color: green ;
-} 
+input[type="checkbox"] {
+  accent-color: green;
+}
+
+.agrandar:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+#nameDeterminantSearch::placeholder {
+  color: rgba(255, 255, 255, 0.648);
+}
+.blocker {
+  cursor: not-allowed;
+}
+
+.inputSearch {
+  border: 0;
+  color: rgba(255, 255, 255, 0.648);
+  line-height: 35px;
+  outline: none;
+  background-color: #26282b2c;
+}
+
+.inputSearch::placeholder {
+  color: rgba(255, 255, 255, 0.648);
+}

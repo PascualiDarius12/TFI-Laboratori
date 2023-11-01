@@ -10,11 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Sample.belongsToMany(models.Exam, { through: 'Examsample' }); //N..N, through es la tabla intermedia que se genera entre las dos relacions
+      Sample.belongsToMany(models.Exam, { through: models.ExamSample }); //N..N, through es la tabla intermedia que se genera entre las dos relacions
+      Sample.belongsToMany(models.Order, { through: models.OrderSample });
     }
   }
   Sample.init({
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    detail: DataTypes.STRING,
+    active: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Sample',

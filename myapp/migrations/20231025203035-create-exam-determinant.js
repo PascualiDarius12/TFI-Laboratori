@@ -2,25 +2,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ExamSamples', {
+    await queryInterface.createTable('ExamDeterminants', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      examId: {
+      determinantId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Exams',
+          model: 'Determinants',
           key: 'id',
         },
         onDelete: 'CASCADE', //esto permite que cuando se borre una clave primaria involucrada en esta ascocian, tambien se borre la fila en la que este relacionada en esta tabla
       },
-      sampleId: {
+      ExamId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Samples',
+          model: 'Exams',
           key: 'id',
         },
         onDelete: 'CASCADE',
@@ -36,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ExamSamples');
+    await queryInterface.dropTable('ExamDeterminants');
   }
 };

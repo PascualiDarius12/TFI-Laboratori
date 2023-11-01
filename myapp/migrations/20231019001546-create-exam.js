@@ -15,6 +15,9 @@ module.exports = {
       detail: {
         type: Sequelize.STRING
       },
+      abbreviation: {
+        type: Sequelize.STRING
+      },
       active: {
         type: Sequelize.BOOLEAN
       },

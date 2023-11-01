@@ -11,13 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Exam.hasMany(models.Exam_sub_group); // 1..N
-      Exam.belongsToMany(models.Sample, { through: 'Examsample' }); //N..N
+      Exam.belongsToMany(models.Sample, { through: 'ExamSample' }); //N..N
+      Exam.belongsToMany(models.Determinant, { through: 'ExamDeterminant' }); //N..N
+      Exam.belongsToMany(models.Order, { through: models.OrderExam });
+      Exam.belongsToMany(models.Sample, { through: models.ExamSample});
      
     }
   }
   Exam.init({
     name: DataTypes.STRING,
+    abbreviation: DataTypes.STRING,
     detail: DataTypes.STRING,
     active: DataTypes.BOOLEAN,
 

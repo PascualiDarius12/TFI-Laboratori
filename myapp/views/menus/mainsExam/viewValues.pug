@@ -1,0 +1,38 @@
+.d-flex.flex-row.bg-color.rounded-top.text-white.w-100.align-items-center
+    p(class="letraChida h5 w-25 p-3") Reference Values #{determinant.name}:
+    input(type="hidden" value=determinant.id id="determinantId")
+    .d-flex.justify-content-center.p-3.w-100.align-items-end.flex-column
+        i(class="fa-solid fa-plus text-white agrandar h4" id="btnAddValueReference") 
+div(class="table-responsive mt-4")
+                    table(class="table  table-hover h6 mt-3 rounded")
+                        thead(class="")
+                            tr(class="")
+                                th(scope="col") ID
+                                th(scope="col") Gender
+                                th(scope="col") Age Range 
+                                th(scope="col") Pregnant
+                                th(scope="col") Max. Value
+                                th(scope="col") Min. Value
+                                th(scope="col") Limit max. 
+                                th(scope="col") Limit min. 
+                                th(scope="col") Update 
+                                th(scope="col") Delete 
+                        tbody
+                            each value in reference_values
+                                    tr(class= value.active ? 'table-primary' : 'table-danger') 
+                                        th(scope="row")  #{value.id}
+                                        td #{value.gender}
+                                        td #{value.age}
+                                        td #{value.pregnant}
+                                        td #{value.max_value}
+                                        td #{value.min_value}
+                                        td #{value.max_limit}
+                                        td #{value.min_limit}
+                                        td 
+                                            div(class="w-100 text-center")
+                                                a(href="" id=value.id class="btnUpdateValue")
+                                                    i(class="fa-solid fa-pen px-1 text-warning agrandar")
+                                        td 
+                                            div(class="w-100 text-center")
+                                                a(href="" id=value.id class=" btnDeleteValue")
+                                                    i(class="fa-solid fa-trash px-1 text-danger agrandar")

@@ -2,27 +2,28 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Determinants', {
+    await queryInterface.createTable('OrderSamples', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
+      sampleId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Samples',
+          key: 'id',
+        },
+        onDelete: 'CASCADE', 
       },
-      abbreviation: {
-        type: Sequelize.STRING
-      },
-      detail: {
-        type: Sequelize.STRING
-      },
-      measurement: {
-        type: Sequelize.STRING
-      },
-      active: {
-        type: Sequelize.BOOLEAN
+      orderId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Orders',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Determinants');
+    await queryInterface.dropTable('OrderSamples');
   }
 };

@@ -1,0 +1,34 @@
+table(class="table  table-hover h6 mt-3 rounded")
+                        thead(class="")
+                            tr(class="")
+                                th(scope="col") ID
+                                th(scope="col") Name
+                                th(scope="col") Detail
+                                th(scope="col") Abbreviation
+                                th(scope="col") Determinants
+                                th(scope="col") Samples
+                                th(scope="col") Update 
+                                th(scope="col") Delete 
+                        tbody
+                            each exam in exams
+                                    tr(class= exam.active ? '' : 'table-danger')
+                                        th(scope="row")  #{exam.id}
+                                        td #{exam.name}
+                                        td #{exam.detail}
+                                        td #{exam.abbreviation}
+                                        td
+                                            div(class="w-100 text-center")
+                                                a(href="" id=exam.id class="btnViewDeterminants")
+                                                    i(class="fa-solid fa-eye px-1 text-success agrandar")
+                                        td
+                                            div(class="w-100 text-center")
+                                                a(href="" id=exam.id class="btnViewSamples")
+                                                    i(class="fa-solid fa-eye px-1 text-success agrandar")
+                                        td 
+                                            div(class="w-100 text-center")
+                                                a(href="" id=exam.id class="btnUpdateExam")
+                                                    i(class="fa-solid fa-pen px-1 text-warning agrandar")
+                                        td 
+                                            div(class="w-100 text-center")
+                                                a(href="" id=exam.id class="btnDeleteExam")
+                                                    i(class="fa-solid fa-trash px-1 text-danger agrandar")

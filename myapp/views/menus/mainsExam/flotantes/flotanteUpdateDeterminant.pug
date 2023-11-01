@@ -1,19 +1,27 @@
 div(class="position-relative p-5 w-100 bg-white shadow rounded ")
     div(class="position-absolute top-0 end-0 m-2") 
         i(class="fa-solid fa-circle-xmark text-danger agrandar" id="btnCerrarFlot")
-    legend(class="letraChida h4") New Determinant:
+    legend(class="letraChida h4") Update Determinant:
+    .row
+        div(class="col p-0 my-3 form-check form-switch d-flex flex-row align-items-center justify-content-start")
+                - if (determinant.active)
+                  input(class="form-check-input h5 mx-2" type="checkbox"  name="active" id="active" checked)
+                - else
+                  input(class="form-check-input h5 mx-2" type="checkbox"  name="active"  id="active")
+                label(class="form-check-label h6" for="btnActive") Active   
+        input(type="hidden" value=determinant.id id="idNewDeterminant")
     .row
         div(class="col my-4 d-flex flex-column justify-content-start h6")    
             label(for="nameDeterminant") Name:
-            input(class="py-2 inputses2 h6 m-2 " id="nameDeterminant" name="nameDeterminant" type="text")
+            input(class="py-2 inputses2 h6 m-2 " id="nameDeterminant" name="nameDeterminant" type="text" value=determinant.name)
         div(class="col my-4 d-flex flex-column justify-content-start h6")    
-            label(for="abbreviationDeterminant") Abreviation:
-            input(class="py-2 inputses2 h6 m-2" id="abbreviationDeterminant" name="abbreviationDeterminant" type="text")
+            label(for="abbreviationDeterminant") Abbreviation:
+            input(class="py-2 inputses2 h6 m-2" id="abbreviationDeterminant" name="abbreviationDeterminant" type="text" value=determinant.abbreviation)
     .row
-        div(class="col mt-5 mr-2 d-flex flex-column justify-content-start h6")  
+        div(class="col mt-5 mr-4 d-flex flex-column justify-content-start h6")  
             label(for="measurementDeterminant") Measurement:   
             select(class="form-select p-2" id="measurementDeterminant" name="measurementDeterminant" aria-label="Default select example")
-                    option(selected) --
+                    option(selected value=determinant.measurement) #{determinant.measurement}
                     option(value="g") g
                     option(value="g/dL") g/dL
                     option(value="g/L") g/L
@@ -52,7 +60,7 @@ div(class="position-relative p-5 w-100 bg-white shadow rounded ")
                     option(value="U/mL") U/mL
                     option(value="%") %
                     option(value="Other") Other
-        div(class="col d-flex flex-column justify-content-start  h6")    
-            textarea(class="h6 m-2 pt-5" placeholder="Detail.." id="detailDeterminant" name="detailDeterminant" , cols="30", rows="3")
+        div(class="col d-flex flex-column justify-content-start h6")  
+            textarea(class="h6 m-2 pt-5" placeholder="Detail..." id="detailDeterminant" name="detailDeterminant" , cols="30", rows="3" value=determinant.detail)
     .w-100.d-flex.justify-content-center 
-        button.btn.btn-primary.text.white(id="btnRegisterDeterminant") Add Determinant
+        button.btn.btn-primary.text.white(id="btnRegNewDeterminant") Add Determinant

@@ -15,6 +15,9 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING
       },
+      // nameComplete: {
+      //   type: Sequelize.STRING
+      // },
       gender: {
         type: Sequelize.STRING
       },
@@ -33,11 +36,20 @@ module.exports = {
       adress: {
         type: Sequelize.STRING
       },
-      clave: {
+      key: {
         type: Sequelize.STRING
       },
       location: {
         type: Sequelize.STRING
+      },
+      direction: {
+        type: Sequelize.STRING
+      },
+      diagnostic: {
+        type: Sequelize.STRING
+      },
+      pregnant: {
+        type: Sequelize.BOOLEAN
       },
       birthdate: {
         type: Sequelize.DATE

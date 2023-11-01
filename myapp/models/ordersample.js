@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Determinant extends Model {
+  class OrderSample extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,18 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Determinant.hasMany(models.Value_reference);
     }
   }
-  Determinant.init({
-    name: DataTypes.STRING,
-    abbreviation: DataTypes.STRING,
-    detail: DataTypes.STRING,
-    measurement: DataTypes.STRING,
-    active: DataTypes.BOOLEAN,
+  OrderSample.init({
   }, {
     sequelize,
-    modelName: 'Determinant',
+    modelName: 'OrderSample',
   });
-  return Determinant;
+  return OrderSample;
 };

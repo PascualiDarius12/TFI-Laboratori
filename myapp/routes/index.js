@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { User } = require("../models");
+const { Order } = require("../models");
 const bodyParser = require("body-parser");
 const { Op } = require("sequelize");
 
@@ -8,13 +9,20 @@ router.use(express.static("public"));
 router.use(bodyParser.urlencoded({ extended: true }));
 
 /* GET home page. */
-
 router.get("/", function (req, res, next) {
+  res.render("index", { title: "Laboratorio" });
+});
+
+router.get("/login", function (req, res, next) {
+  res.render("login");
+});
+
+router.get("/main", function (req, res, next) {
   res.render("menu");
 });
 
 // Ruta para renderizar la otra plantilla cuando se hace click en una opción del menú
-router.get("/main/:id", (req, res) => {
+router.get("/main/:id", async (req, res) => {
   const id = req.params.id;
   //lógica para determinar qué plantilla renderizar según el 'id'
   switch (id) {
@@ -22,7 +30,14 @@ router.get("/main/:id", (req, res) => {
       res.render("menus/mainPatient.pug");
       break;
     case "order":
-      res.render("menus/mainOrder.pug");
+
+      let orders = await Order.findAll({
+        include: User,
+      })
+      if(orders){
+
+        res.render("menus/mainOrder.pug",{orders:orders});
+      }
       break;
     case "result":
       res.render("menus/mainResult.pug");
@@ -180,32 +195,4 @@ router.post("/main/patient/updateUser/newUser", async (req, res) => {
   }
 });
 
-//EXAM ROUTES
-
-router.get("/main/exam/:id", async (req, res) => {
-  const id = req.params.id;
-  let users = [];
-  //lógica para determinar qué plantilla renderizar según el 'id'
-  switch (id) {
-    case "add":
-      res.render("menus/mainsExam/addExam.pug");
-      break;
-    case "search":
-      try {
-        users = await User.findAll();
-        res.render("menus/mainsPatient/searchExam.pug", { users: users });
-      } catch {
-        console.error(error);
-        res.status(500).send("ERROR in patient search.");
-      }
-      break;
-    default:
-      res.render("error.pug");
-      break;
-  }
-});
-
-// -fechaOriginal = user.birthdate;
-// -options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-// -fechaFormateada = fechaOriginal.toLocaleDateString('es-AR', options);  // 'es-AR' representa el idioma español y el formato argentino
 module.exports = router;

@@ -1,0 +1,16 @@
+div(class="position-relative p-5 w-100 bg-white shadow-sm rounded")
+    div(class="position-absolute top-0 end-0 m-2") 
+        i(class="fa-solid fa-circle-xmark text-danger agrandar" id="btnCerrarFlot")
+    legend(class="letraChida h4") Label Sample:
+    .card.rounded.m-3.p-1.w-75-h6 
+        .row 
+            p.col.h6 #{'Fecha: '+orderSample.createdAt}
+        .row 
+            p.h6 #{'Code Patient: ' + user.id}
+            p.h6 #{'Name: ' + user.first_name + ' ' + user.last_name}
+            p.h6 #{'Dni: ' + user.dni}
+        .row 
+            p.col.text-end.w-100.h6 #{'N° Order: ' + order.id}
+    .w-100.d-flex.justify-content-center 
+        .btn.btn-primary print
+            i(class="fa-solid fa-print text-white p-1")

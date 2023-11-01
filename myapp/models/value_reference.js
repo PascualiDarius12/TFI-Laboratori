@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Determinant extends Model {
+  class Value_reference extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,18 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Determinant.hasMany(models.Value_reference);
     }
   }
-  Determinant.init({
-    name: DataTypes.STRING,
-    abbreviation: DataTypes.STRING,
-    detail: DataTypes.STRING,
-    measurement: DataTypes.STRING,
+  Value_reference.init({
+    gender: DataTypes.STRING,
+    age: DataTypes.STRING,
+    pregnant: DataTypes.BOOLEAN,
+    max_value: DataTypes.DOUBLE,
+    min_value: DataTypes.DOUBLE,
+    max_limit: DataTypes.DOUBLE,
+    min_limit: DataTypes.DOUBLE,
     active: DataTypes.BOOLEAN,
   }, {
     sequelize,
-    modelName: 'Determinant',
+    modelName: 'Value_reference',
   });
-  return Determinant;
+  return Value_reference;
 };
