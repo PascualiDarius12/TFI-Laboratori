@@ -1,16 +1,29 @@
-extends layout
-
-block content
-  include navSuperior.pug
-  div(class="w-100 h-100 position-relative d-flex flex-row") 
-    img(class="img-fluid adaptarimg" src="images/fondoLogin.png" alt="" id="imagen")
-    div(class=" position-absolute text-white p-5 h-100 w-100 d-flex align-items-center")
-        form(action="" class="rounded d-flex flex-column align-items-center justify-content-center bg-white p-5 mx-5 text-white shadow-sm" id="" name="" onsubmit="")
-          span(class="text-dark letraChida text-left w-100") Login
-          span(class="text-muted letraChida text-left w-100 h6" ) Sing in to continue.
-          input(class="inputses my-3 rounded" type="text" id="" name="" placeholder="User")
-          input(class="inputses rounded" type="password" id="" name="" placeholder="Password")
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css")
+    script(src="scriptAuth.js" defer)
+  body(class="")
+  div(class="w-100 h-100 d-flex flex-row position-absolute degradadoBody") 
+    //- img(class="" src="images/fondoLogin3.png" alt="" id="imagen")
+    .w-50.h-100.degradado.radio.d-flex.justify-content-center.align-items-center.flex-column
+      .letraChida.h4.text-white.position-absolute.top-0.start-0.p-5.d-flex.flex-row 
+        p My Clinic Laboratory 
+        i(class="fa-solid fa-seedling p-1")
+      .position-absolute.w-50 
+      img(src="images/tubo.png", alt="Responsive image" class="tamanoImg imagen-giratoria" )
+      p.letraChida.text-white.position-absolute.bottom-0.py-5(style="font-size: 15px") Copyright © 2023. My Clinic Laboratory-Dario Pascuali. All rights recerved.
+    div(class="w-50 text-white p-5 h-100 d-flex align-items-center justify-content-center radio2" style="background-color:#F0EBF4")
+        form(class="radioTotal d-flex flex-column align-items-center justify-content-center p-5 mx-5 text-white shadow-sm " style="background-color:white")
+          span(class="text-dark letraChida text-left w-100 h1") Login
+          span(class="text-muted letraChida text-left w-100 h5" ) Sing in to continue.
+          input(class="inputses my-3 rounded" type="email" id="email" name="email" placeholder="Email")
+          input(class="inputses rounded" type="password" id="key" name="key" placeholder="Password")
           div(class="mt-4 w-100")
-           button(class="btn text-white rounded w-100 letraChida shadow-sm" style="background-color:#9e00c5") 
-              a(class="sinDeco text-white letraChida h6 w-100 h-100" href="../main") Log in
-          span(class="text-muted letraChida text-center w-100 mt-3" style="font-size: 12px") Forgot Password?
+           button(class="btn text-white radius w-100 letraChida shadow-sm h5" id='btnLogin' style="background-color:#921ED1") Log in
+          div(class="text-danger letraChida text-center w-100 mt-3 d-none" style="font-size: 15px" id="messageError") 
+          span(class="text-muted letraChida text-center w-100 mt-3" style="font-size: 15px") Forgot Password?
+  

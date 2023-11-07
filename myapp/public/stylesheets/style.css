@@ -48,6 +48,7 @@
 
 .enlaceMenu:hover {
   color: #ff0000;
+  cursor: pointer;
 }
 
 .fondoBoton {
@@ -120,7 +121,7 @@
 }
 
 .bg-color {
-  background-color: rgb(123, 0, 255);
+  background-color: #921ed1;
 }
 .text-violet {
   color: #ffffff;
@@ -161,4 +162,54 @@ input[type="checkbox"] {
 
 .inputSearch::placeholder {
   color: rgba(255, 255, 255, 0.648);
+}
+
+.radio {
+  border-radius: 0 10% 0 0;
+}
+
+.radioTotal {
+  border-radius: 0 10% 0 10%;
+}
+
+
+.radio2 {
+  border-radius: 0 0 0 10%;
+}
+
+.tamanoImg {
+  height: 400px;
+  width: 400px;
+}
+
+.degradado {
+  background: rgb(146, 30, 209);
+  background: linear-gradient(
+    0deg,
+    rgba(146, 30, 209, 1) 0%,
+    rgba(50, 0, 173, 1) 100%
+  );
+}
+
+.degradadoBody {
+  background: rgb(146,30,209);
+  background: linear-gradient(0deg, rgba(146,30,209,1) 10%, rgba(240,235,244,1) 89%);
+}
+
+.enlaceOff {
+  text-decoration: none;
+  color: #1f1d1d;
+}
+
+.enlaceOff:hover {
+  cursor: pointer;
+  color: #828282;
+}
+
+.imagen-giratoria {
+  transition: transform 0.5s;
+}
+
+.imagen-giratoria:hover {
+  transform: rotate(45deg);
 }

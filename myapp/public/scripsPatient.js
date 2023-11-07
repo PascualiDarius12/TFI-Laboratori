@@ -1,10 +1,35 @@
 const opcionesMenu = document.querySelectorAll("a.enlace");
 
+const SignOff = document.getElementById("SignOff");
+SignOff.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (document.getElementById("NavSignOff").classList.contains('d-none')) {
+  document.getElementById("NavSignOff").classList.remove("d-none");
+  let btnClosed = document.getElementById("btnClosed");
+  btnClosed.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    document.getElementById("NavSignOff").classList.add("d-none");
+    window.location.href = "/login";
+  });
+ }else{
+  document.getElementById("NavSignOff").classList.add("d-none");
+ }
+
+});
+
 opcionesMenu.forEach((opcion) => {
   opcion.addEventListener("click", (e) => {
     e.preventDefault();
+    let token = localStorage.getItem("token");
+    console.log(token);
     const id = opcion.getAttribute("id");
-    fetch(`/main/${id}`)
+    fetch(`/main/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.text())
       .then((data) => {
         document.querySelector("#contenido-derecho").innerHTML = data;
@@ -13,20 +38,190 @@ opcionesMenu.forEach((opcion) => {
         } else if (id == "exam") {
           enlacesExam();
         } else if (id == "order") {
-        enlacesOrder();
-      }
+          enlacesOrder();
+        } else if (id == "user") {
+          enlacesUser();
+        }
       });
   });
 });
 
+//ENLACES PARA USERS
+function enlacesUser() {
+  let btnAddUser = document.getElementById("btnAddUser");
+  let divInvisible = document.getElementById("invisible");
+  let btnUpdateUser = document.querySelectorAll('.btnUpdateUser')
+  let btnDeleteUser = document.querySelectorAll('.btnDeleteUser')
+  let btnSearchUser = document.getElementById('btnSearchUser')
+
+  btnSearchUser.addEventListener("click", (e) => {
+    let dni = document.getElementById("dniUserSearch").value;
+    console.log(dni)
+    let user = {
+      dni: dni,
+    };
+    fetch("/user/searchUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((respose) => respose.text())
+      .then((data) => {
+        document.querySelector("#tabla-users").innerHTML = data;
+        enlacesUser();
+      });
+  });
+
+
+  btnAddUser.addEventListener("click", (e) => {
+    e.preventDefault();
+    divInvisible.classList.remove("invisible");
+    fetch("/user/addUser")
+      .then((response) => response.text())
+      .then((data) => {
+        document.querySelector("#contenedor-flotante").innerHTML = data;
+        document.querySelector("#viewUser").classList.add("opacity-50");
+
+        let btnCerrarFlot = document.getElementById("btnCerrarFlot");
+        btnCerrarFlot.addEventListener("click", (e) => {
+          e.preventDefault();
+          divInvisible.classList.add("invisible");
+          document.querySelector("#viewUser").classList.remove("opacity-50");
+          enlacesUser();
+        });
+
+        let btnRegisterUser = document.getElementById("btnRegisterUser");
+        btnRegisterUser.addEventListener("click", (e) => {
+          e.preventDefault();
+          const user = {
+            first_name: document.getElementById("firstName").value,
+            last_name: document.getElementById("lastName").value,
+            dni: document.getElementById("dni").value,
+            email: document.getElementById("email").value,
+            rol: document.getElementById("rol").value,
+          };
+          fetch("/user/registerUser", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              document
+                .querySelector("#viewUser")
+                .classList.remove("opacity-50");
+              document.querySelector("#contenido-derecho").innerHTML = data;
+              divInvisible.classList.add("invisible");
+              enlacesUser();
+            });
+        });
+      });
+  });
+
+  btnUpdateUser.forEach((opcion) => {
+    opcion.addEventListener("click", (e) => {
+      e.preventDefault();
+      let id = opcion.getAttribute("id");
+      let user = {
+        id: id,
+      };
+      fetch("/user/updateUser", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          divInvisible.classList.remove("invisible");
+          document
+            .querySelector("#viewUser")
+            .classList.add("opacity-50");
+          document.querySelector("#contenedor-flotante").innerHTML = data;
+
+          let btnCerrarFlot = document.getElementById("btnCerrarFlot");
+          btnCerrarFlot.addEventListener("click", (e) => {
+            e.preventDefault();
+            divInvisible.classList.add("invisible");
+            document
+              .querySelector("#viewUser")
+              .classList.remove("opacity-50");
+          });
+
+          let btnRegNewUser = document.getElementById(
+            "btnRegNewUser"
+          );
+          btnRegNewUser.addEventListener("click", (e) => {
+            e.preventDefault();
+            let active = false;
+            if (document.getElementById("active").checked) {
+              active = true;
+            }
+            let newUser = {
+              id: document.getElementById('idNewUser').value,
+              first_name: document.getElementById("firstName").value,
+              last_name: document.getElementById("lastName").value,
+              dni: document.getElementById("dni").value,
+              email: document.getElementById("email").value,
+              rol: document.getElementById("rol").value,
+              active: active,
+            };
+            fetch("/user/regUpdateUser", {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json",
+              },
+              body: JSON.stringify(newUser),
+            })
+              .then((response) => response.text())
+              .then((data) => {
+                document.querySelector("#contenido-derecho").innerHTML = data;
+                divInvisible.classList.add("invisible");
+                document
+                  .querySelector("#viewUser")
+                  .classList.remove("opacity-50");
+                enlacesUser();
+              });
+          });
+        });
+    });
+  });
+
+  btnDeleteUser.forEach((opcion) => {
+    opcion.addEventListener("click", (e) => {
+      e.preventDefault();
+      const user = {
+        id: opcion.getAttribute("id"),
+      };
+      fetch("/user/deleteUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          document.querySelector("#contenido-derecho").innerHTML = data;
+          enlacesUser();
+        });
+    });
+  });
+}
+
 //ENLACES PARA ORDENES
-function enlacesOrder(){
-  let divInvisible = document.getElementById("invisible")
-  let btnAddOrder = document.getElementById('btnAddOrder')
-  let btnViewExam = document.querySelectorAll('.btnViewExam')
-  let btnAddExam = document.getElementById('btnAddExam')
-  let btnViewSamples = document.querySelectorAll('.btnViewSamples')
-  let btnDeliverSamples = document.querySelectorAll('.btnDeliverSamples')
+function enlacesOrder() {
+  let divInvisible = document.getElementById("invisible");
+  let btnAddOrder = document.getElementById("btnAddOrder");
+  let btnViewExam = document.querySelectorAll(".btnViewExam");
+  let btnAddExam = document.getElementById("btnAddExam");
+  let btnViewSamples = document.querySelectorAll(".btnViewSamples");
+  let btnDeliverSamples = document.querySelectorAll(".btnDeliverSamples");
 
   btnAddOrder.addEventListener("click", (e) => {
     e.preventDefault();
@@ -35,28 +230,23 @@ function enlacesOrder(){
       .then((response) => response.text())
       .then((data) => {
         document.querySelector("#contenedor-flotante").innerHTML = data;
-        document
-          .querySelector("#viewOrder")
-          .classList.add("opacity-50");
+        document.querySelector("#viewOrder").classList.add("opacity-50");
 
         let btnCerrarFlot = document.getElementById("btnCerrarFlot");
         btnCerrarFlot.addEventListener("click", (e) => {
           e.preventDefault();
           divInvisible.classList.add("invisible");
-          document
-            .querySelector("#viewOrder")
-            .classList.remove("opacity-50");
-            enlacesOrder()
+          document.querySelector("#viewOrder").classList.remove("opacity-50");
+          enlacesOrder();
         });
-        
-        let btnAddPatient = document.querySelectorAll('.btnAddPatient')
-        
-        btnAddPatient.forEach(option =>{
 
+        let btnAddPatient = document.querySelectorAll(".btnAddPatient");
+
+        btnAddPatient.forEach((option) => {
           option.addEventListener("click", (e) => {
             e.preventDefault();
             const patient = {
-              id: option.getAttribute('id')
+              id: option.getAttribute("id"),
             };
             fetch("/order/addOrder", {
               method: "POST",
@@ -65,17 +255,17 @@ function enlacesOrder(){
               },
               body: JSON.stringify(patient),
             })
-            .then((response) => response.text())
-            .then((data) => {
-              document
-              .querySelector("#viewOrder")
-              .classList.remove("opacity-50");
-              document.querySelector("#contenido-derecho").innerHTML = data;
-              divInvisible.classList.add("invisible");
-              enlacesOrder();
-            });
+              .then((response) => response.text())
+              .then((data) => {
+                document
+                  .querySelector("#viewOrder")
+                  .classList.remove("opacity-50");
+                document.querySelector("#contenido-derecho").innerHTML = data;
+                divInvisible.classList.add("invisible");
+                enlacesOrder();
+              });
           });
-        })
+        });
       });
   });
 
@@ -95,12 +285,8 @@ function enlacesOrder(){
       })
         .then((response) => response.text())
         .then((data) => {
-          document
-            .querySelector("#contenido-exam")
-            .classList.remove("d-none");
-          document
-            .querySelector("#contenido-sample")
-            .classList.add("d-none");
+          document.querySelector("#contenido-exam").classList.remove("d-none");
+          document.querySelector("#contenido-sample").classList.add("d-none");
           document.querySelector("#contenido-exam").innerHTML = data;
           enlacesOrder();
         });
@@ -110,11 +296,11 @@ function enlacesOrder(){
   btnAddExam.addEventListener("click", (e) => {
     e.preventDefault();
     divInvisible.classList.remove("invisible");
-    let orderId= document.getElementById('orderId').value
-    let order ={
-      id: orderId
-    }
-    fetch("/order/addExam",{
+    let orderId = document.getElementById("orderId").value;
+    let order = {
+      id: orderId,
+    };
+    fetch("/order/addExam", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -123,36 +309,31 @@ function enlacesOrder(){
     })
       .then((response) => response.text())
       .then((data) => {
-        document
-          .querySelector("#viewOrder")
-          .classList.add("opacity-50");
+        document.querySelector("#viewOrder").classList.add("opacity-50");
         document.querySelector("#contenedor-flotante").innerHTML = data;
-        regExams()
+        regExams();
 
         let btnCerrarFlot = document.getElementById("btnCerrarFlot");
         btnCerrarFlot.addEventListener("click", (e) => {
           e.preventDefault();
           divInvisible.classList.add("invisible");
-          document
-            .querySelector("#viewOrder")
-            .classList.remove("opacity-50");
-            enlacesOrder()
-           
+          document.querySelector("#viewOrder").classList.remove("opacity-50");
+          enlacesOrder();
         });
-        function regExams(){
-          let orderId= document.getElementById('orderId').value
-          let btnRegExam = document.querySelectorAll('.btnRegExam')
-          
+        function regExams() {
+          let orderId = document.getElementById("orderId").value;
+          let btnRegExam = document.querySelectorAll(".btnRegExam");
+
           btnRegExam.forEach((opcion) => {
             opcion.addEventListener("click", (e) => {
               e.preventDefault();
               let id = opcion.getAttribute("id");
               let exam = {
                 id: id,
-                orderId:orderId
+                orderId: orderId,
               };
 
-              console.log(exam)
+              console.log(exam);
               fetch("/order/regExams", {
                 method: "POST",
                 headers: {
@@ -160,31 +341,28 @@ function enlacesOrder(){
                 },
                 body: JSON.stringify(exam),
               })
-              .then((response) => response.text())
-              .then((data) => {
-                document
-                .querySelector("#viewOrder")
-                .classList.add("opacity-50");
-                document.querySelector("#contenedor-flotante").innerHTML = data;
-                
-                let btnCerrarFlot = document.getElementById("btnCerrarFlot");
-                btnCerrarFlot.addEventListener("click", (e) => {
-                  e.preventDefault();
-                  divInvisible.classList.add("invisible");
+                .then((response) => response.text())
+                .then((data) => {
                   document
-                  .querySelector("#viewOrder")
-                  .classList.remove("opacity-50");
-                  enlacesOrder();
+                    .querySelector("#viewOrder")
+                    .classList.add("opacity-50");
+                  document.querySelector("#contenedor-flotante").innerHTML =
+                    data;
 
+                  let btnCerrarFlot = document.getElementById("btnCerrarFlot");
+                  btnCerrarFlot.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    divInvisible.classList.add("invisible");
+                    document
+                      .querySelector("#viewOrder")
+                      .classList.remove("opacity-50");
+                    enlacesOrder();
+                  });
+                  regExams();
                 });
-                regExams()
-              });
             });
           });
-          
         }
-        
-        
       });
   });
 
@@ -204,12 +382,10 @@ function enlacesOrder(){
       })
         .then((response) => response.text())
         .then((data) => {
-          
           document
             .querySelector("#contenido-sample")
             .classList.remove("d-none");
-          document.querySelector("#contenido-exam")
-            .classList.add("d-none");
+          document.querySelector("#contenido-exam").classList.add("d-none");
           document.querySelector("#contenido-sample").innerHTML = data;
           enlacesOrder();
         });
@@ -220,13 +396,13 @@ function enlacesOrder(){
     opcion.addEventListener("click", (e) => {
       e.preventDefault();
       let id = opcion.getAttribute("id");
-      console.log(id)
+      console.log(id);
       let datos = {
         sampleId: id,
-        orderId: document.getElementById('orderId').value,
-        userId: document.getElementById('userId').value
+        orderId: document.getElementById("orderId").value,
+        userId: document.getElementById("userId").value,
       };
-      console.log(datos)
+      console.log(datos);
       fetch("/order/deliverSamples", {
         method: "POST",
         headers: {
@@ -236,30 +412,52 @@ function enlacesOrder(){
       })
         .then((response) => response.text())
         .then((data) => {
-          
-          document
-          .querySelector("#viewOrder")
-          .classList.add("opacity-50");
-        document.querySelector("#contenedor-flotante").innerHTML = data;
-        divInvisible.classList.remove("invisible");
-         
-        let btnCerrarFlot = document.getElementById("btnCerrarFlot");
-        btnCerrarFlot.addEventListener("click", (e) => {
-          e.preventDefault();
-          divInvisible.classList.add("invisible");
-          document
-          .querySelector("#viewOrder")
-          .classList.remove("opacity-50");
-          enlacesOrder();
+          document.querySelector("#viewOrder").classList.add("opacity-50");
+          document.querySelector("#contenedor-flotante").innerHTML = data;
+          divInvisible.classList.remove("invisible");
 
-        });
-        
+          imprimir();
+          function imprimir() {
+            let btnCerrarFlot = document.getElementById("btnCerrarFlot");
+            btnCerrarFlot.addEventListener("click", (e) => {
+              e.preventDefault();
+              divInvisible.classList.add("invisible");
+              document
+                .querySelector("#viewOrder")
+                .classList.remove("opacity-50");
+              enlacesOrder();
+            });
+            let bntImprimirEtiqueta = document.getElementById(
+              "bntImprimirEtiqueta"
+            );
+
+            bntImprimirEtiqueta.addEventListener("click", (e) => {
+              e.preventDefault();
+              console.log("entro");
+              let etiqueta = document.getElementById("etiqueta");
+
+              const divClonado = etiqueta.cloneNode(true);
+              const ventanaImpresion = window.open(
+                "",
+                "",
+                "width=600,height=600"
+              );
+              ventanaImpresion.document.write(
+                "<html><link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css'><head><title>Imprimir Div</title></head><body>"
+              );
+              ventanaImpresion.document.write(divClonado.innerHTML);
+              ventanaImpresion.document.write("</body></html>");
+              ventanaImpresion.document.close();
+              ventanaImpresion.onload = async function () {
+                ventanaImpresion.print();
+                ventanaImpresion.close();
+              };
+              imprimir();
+            });
+          }
         });
     });
   });
-
-  
-
 }
 
 //ENLACES PARA EXAMENES
@@ -513,7 +711,7 @@ function enlacesExam() {
         })
           .then((response) => response.text())
           .then((data) => {
-            document.querySelector("#contenido-determinant").innerHTML = data;
+            document.querySelector("#contenido-derecho").innerHTML = data;
             enlacesDeterminant();
           });
       });
@@ -705,9 +903,7 @@ function enlacesExam() {
         .then((response) => response.text())
         .then((data) => {
           document.querySelector("#contenedor-flotante").innerHTML = data;
-          document
-            .querySelector("#viewSample")
-            .classList.add("opacity-50");
+          document.querySelector("#viewSample").classList.add("opacity-50");
 
           let btnCerrarFlot = document.getElementById("btnCerrarFlot");
           btnCerrarFlot.addEventListener("click", (e) => {
@@ -753,7 +949,7 @@ function enlacesExam() {
         let sample = {
           id: id,
         };
-        console.log(id)
+        console.log(id);
         fetch("/updateSample", {
           method: "POST",
           headers: {
@@ -764,9 +960,7 @@ function enlacesExam() {
           .then((response) => response.text())
           .then((data) => {
             divInvisible.classList.remove("invisible");
-            document
-              .querySelector("#viewSample")
-              .classList.add("opacity-50");
+            document.querySelector("#viewSample").classList.add("opacity-50");
             document.querySelector("#contenedor-flotante").innerHTML = data;
 
             let btnCerrarFlot = document.getElementById("btnCerrarFlot");
@@ -778,9 +972,7 @@ function enlacesExam() {
                 .classList.remove("opacity-50");
             });
 
-            let btnRegNewSample = document.getElementById(
-              "btnRegNewSample"
-            );
+            let btnRegNewSample = document.getElementById("btnRegNewSample");
             btnRegNewSample.addEventListener("click", (e) => {
               e.preventDefault();
               let active = false;
@@ -788,7 +980,7 @@ function enlacesExam() {
                 active = true;
               }
               let newSample = {
-                id: document.getElementById('idNewSample').value,
+                id: document.getElementById("idNewSample").value,
                 type: document.getElementById("typeSample").value,
                 detail: document.getElementById("detailSample").value,
                 active: active,
@@ -837,12 +1029,11 @@ function enlacesExam() {
   }
 
   //enlaces para examenes
-  function enlacesManagerExam(){
+  function enlacesManagerExam() {
     let divInvisible = document.getElementById("invisible");
-    let btnSearchExam = document.getElementById('btnSearchExam')
-    let btnAddExam = document.getElementById('btnAddExam')
-    
-    
+    let btnSearchExam = document.getElementById("btnSearchExam");
+    let btnAddExam = document.getElementById("btnAddExam");
+
     btnSearchExam.addEventListener("click", (e) => {
       let name = document.getElementById("nameExamSearch").value;
       let exam = {
@@ -863,7 +1054,6 @@ function enlacesExam() {
         });
     });
 
-
     btnAddExam.addEventListener("click", (e) => {
       e.preventDefault();
       divInvisible.classList.remove("invisible");
@@ -871,17 +1061,13 @@ function enlacesExam() {
         .then((response) => response.text())
         .then((data) => {
           document.querySelector("#contenedor-flotante").innerHTML = data;
-          document
-            .querySelector("#viewExam")
-            .classList.add("opacity-50");
+          document.querySelector("#viewExam").classList.add("opacity-50");
 
           let btnCerrarFlot = document.getElementById("btnCerrarFlot");
           btnCerrarFlot.addEventListener("click", (e) => {
             e.preventDefault();
             divInvisible.classList.add("invisible");
-            document
-              .querySelector("#viewExam")
-              .classList.remove("opacity-50");
+            document.querySelector("#viewExam").classList.remove("opacity-50");
           });
 
           let btnRegisterExam = document.getElementById("btnRegisterExam");
@@ -890,7 +1076,7 @@ function enlacesExam() {
             e.preventDefault();
             const exam = {
               name: document.getElementById("nameExam").value,
-              abbreviation: document.getElementById('abbreviationExam').value,
+              abbreviation: document.getElementById("abbreviationExam").value,
               detail: document.getElementById("detailExam").value,
             };
             fetch("/registerExam", {
@@ -913,10 +1099,9 @@ function enlacesExam() {
         });
     });
   }
-
 }
 
-//FUNCIONES DE ENLACES PARA USERS
+//FUNCIONES DE ENLACES PARA PATIENTS
 
 function nuevosEnlacesPatient() {
   const linksUsuarios = document.querySelectorAll(".enlace-usuario");
@@ -946,7 +1131,7 @@ function nuevosEnlacesPatient() {
       let last_name = document.getElementById("last_name").value;
       let phone = document.getElementById("phone").value;
       let email = document.getElementById("email").value;
-      let clave = document.getElementById("clave".value);
+      let clave = document.getElementById("clave").value;
       let gender = document.getElementById("gender").value;
       let location = document.getElementById("location").value;
       let birthdate = document.getElementById("birthdate").value;

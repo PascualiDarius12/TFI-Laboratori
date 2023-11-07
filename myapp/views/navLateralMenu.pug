@@ -2,34 +2,32 @@ block content
   div(class= "position-fixed bg-oscuro w-25  h-100 text-center text-gris px-1 py-5 rounded-0 letraChida shadow-sm" style="z-index:3")
      div(class="d-flex flex-column justify-content-center align-items-center my-4")
         img(class="img-fluid rounded-circle w-50" src="images/perfil-de-usuario.webp" alt="" id="imagen")
-        span(class="letraChida h5 mt-1") Luisa Martinez 
-        span(class="letraChida h6 text-secondary") Secretaria
+        span(class="letraChida h5 mt-1") #{admin.first_name+" "+admin.last_name} 
+        span(class="letraChida h6 text-secondary") #{admin.rol}
+        div(data-token=token)
      ul(class="w-75 sinPunto h6 text-gris") 
-       li(class="") 
-         a(href="" id="patient" class="d-flex flex-row my-2 enlace text-gris")   
-            i(class="fas fa-user-md mx-1")
-            p(class="") Patient
-       li 
-         a(href="" id="order"  class="d-flex flex-row my-2 enlace text-gris")   
-            i(class="fas fa-briefcase-medical mx-1")
-            p(class="") Order of work
-       li 
-         a(href="" id="result"  class="d-flex flex-row my-2 enlace text-gris")   
-            i(class="fas fa-notes-medical mx-1")
-            p(class="") Result
-       li 
-         a(href="" id="exam"  class="d-flex flex-row my-2 enlace text-gris")  
-            i(class="fas fa-file-medical mx-1")
-            p(class="") Exam
-       li 
-         a(href="" id="sample"  class="d-flex flex-row my-2 enlace text-gris")  
-            i(class="fas fa-syringe mx-1")
-            p(class="") Sample
-       li 
-         a(href="" id="user"  class="d-flex flex-row my-2 enlace text-gris")  
-            i(class="fas fa-users mx-1")
-            p(class="") User Manager
-       li 
-         a(href="" id="audit"  class="d-flex flex-row my-2 enlace text-gris")  
-            i(class="fas fa-calendar-alt mx-1")
-            p(class="") Audit Manager
+       - if (admin.rol=="Administrative")
+         li(class="") 
+           a(href="" id="patient" class="d-flex flex-row my-2 enlace text-gris")   
+              i(class="fas fa-user-md mx-1")
+              p(class="") Patient
+       - if (admin.rol=="Administrative" || admin.rol=="Bioquimic" || admin.rol=="Tecnic")
+         li 
+           a(href="" id="order"  class="d-flex flex-row my-2 enlace text-gris")   
+              i(class="fas fa-briefcase-medical mx-1")
+              p(class="") Order of work
+       - if (admin.rol=="Bioquimic" || admin.rol=="Tecnic")
+         li 
+           a(href="" id="exam"  class="d-flex flex-row my-2 enlace text-gris")  
+              i(class="fas fa-file-medical mx-1")
+              p(class="") Exam
+       - if (admin.rol=="Administrative")
+         li 
+           a(href="" id="user"  class="d-flex flex-row my-2 enlace text-gris")  
+              i(class="fas fa-users mx-1")
+              p(class="") User Manager
+       - if (admin.rol=="Administrative")
+         li 
+           a(href="" id="audit"  class="d-flex flex-row my-2 enlace text-gris")  
+              i(class="fas fa-calendar-alt mx-1")
+              p(class="") Audit Manager
