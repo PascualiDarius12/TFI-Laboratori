@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 const authToken = require("../middleware/auth");
 
-router.get("/login", function (req, res, next) {
+router.get("/", function (req, res, next) {
   res.render("login");
 });
 

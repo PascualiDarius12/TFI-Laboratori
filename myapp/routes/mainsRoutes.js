@@ -8,9 +8,9 @@ const bcrypt = require("bcrypt");
 const authToken = require("../middleware/auth");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Laboratorio" });
-});
+// router.get("/", function (req, res, next) {
+//   res.render("index", { title: "Laboratorio" });
+// });
 
 // Ruta para renderizar la otra plantilla cuando se hace click en una opción del menú
 router.get("/main/:id", authToken, async (req, res) => {

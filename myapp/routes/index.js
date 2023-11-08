@@ -17,9 +17,9 @@ router.use(bodyParser.urlencoded({ extended: true }));
 //   res.render("login");
 // });
 
-router.get("/", function (req, res, next) {
-  res.render("menu");
-});
+// router.get("/", function (req, res, next) {
+//   res.render("menu");
+// });
 
 // Ruta para renderizar la otra plantilla cuando se hace click en una opción del menú
 router.get("/main/:id", async (req, res) => {
